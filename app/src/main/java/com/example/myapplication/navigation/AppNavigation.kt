@@ -69,7 +69,7 @@ fun AppNavigation() {
             PublicarLoteScreen(
                 onBackClick = { navController.popBackStack() },
                 onSubmitClick = {
-                    viewModel.agregarNotificacion("Nuevo lote publicado", "Has publicado un nuevo lote exitosamente.")
+                    // Esto se ejecutará automáticamente cuando el ViewModel confirme el éxito en la API
                     navController.popBackStack()
                 }
             )
