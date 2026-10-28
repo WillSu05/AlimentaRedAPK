@@ -2,9 +2,11 @@ package com.example.myapplication.screen
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -30,22 +32,28 @@ fun MisSolicitudesScreen(
             .padding(20.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Text(
-                text = "Mis solicitudes",
-                fontSize = 24.sp,
-                fontWeight = FontWeight.Bold,
-                color = Color.Black
-            )
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.clickable(onClick = onHomeClick)
+            ) {
+                Icon(Icons.Filled.ArrowBack, contentDescription = "Volver", tint = Color.Black)
+                Spacer(modifier = Modifier.width(8.dp))
+                Text(
+                    text = "Mis solicitudes",
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = Color.Black
+                )
+            }
             Image(
                 painter = painterResource(id = R.drawable.logo_alimentared),
                 contentDescription = "Logo",
-                modifier = Modifier.size(45.dp)
+                modifier = Modifier.size(40.dp)
             )
         }
 
@@ -67,45 +75,21 @@ fun MisSolicitudesScreen(
             singleLine = true
         )
 
-        Spacer(modifier = Modifier.height(24.dp))
+        Spacer(modifier = Modifier.height(20.dp))
 
         Column(
             verticalArrangement = Arrangement.spacedBy(16.dp),
             modifier = Modifier.weight(1f)
         ) {
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(16.dp)
-            ) {
-                CategoriaCard(
-                    title = "Frutas y verduras",
-                    iconRes = R.drawable.frutas_verduras,
-                    modifier = Modifier.weight(1f)
-                )
-                CategoriaCard(
-                    title = "Lácteos",
-                    iconRes = R.drawable.lacteos,
-                    modifier = Modifier.weight(1f)
-                )
+            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(16.dp)) {
+                SolicitudGridCard("Frutas y verduras", R.drawable.frutas_verduras, Modifier.weight(1f))
+                SolicitudGridCard("Lácteos", R.drawable.lacteos, Modifier.weight(1f))
             }
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(16.dp)
-            ) {
-                CategoriaCard(
-                    title = "Panadería",
-                    iconRes = R.drawable.panaderia,
-                    modifier = Modifier.weight(1f)
-                )
-                CategoriaCard(
-                    title = "Comida Preparada",
-                    iconRes = R.drawable.comida_preparada,
-                    modifier = Modifier.weight(1f)
-                )
+            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(16.dp)) {
+                SolicitudGridCard("Panadería", R.drawable.panaderia, Modifier.weight(1f))
+                SolicitudGridCard("Comida Preparada", R.drawable.comida_preparada, Modifier.weight(1f))
             }
         }
-
-        Spacer(modifier = Modifier.height(16.dp))
 
         Button(
             onClick = onHomeClick,
@@ -121,31 +105,20 @@ fun MisSolicitudesScreen(
 }
 
 @Composable
-fun CategoriaCard(title: String, iconRes: Int, modifier: Modifier = Modifier) {
+fun SolicitudGridCard(title: String, iconRes: Int, modifier: Modifier = Modifier) {
     Card(
         shape = RoundedCornerShape(24.dp),
         colors = CardDefaults.cardColors(containerColor = Color(0xFFA5D6A7)),
-        modifier = modifier.height(140.dp)
+        modifier = modifier.height(130.dp)
     ) {
         Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(12.dp),
+            modifier = Modifier.fillMaxSize().padding(12.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
-            Image(
-                painter = painterResource(id = iconRes),
-                contentDescription = title,
-                modifier = Modifier.size(50.dp)
-            )
-            Spacer(modifier = Modifier.height(8.dp))
-            Text(
-                text = title,
-                fontSize = 12.sp,
-                fontWeight = FontWeight.Bold,
-                color = Color.Black
-            )
+            Image(painter = painterResource(id = iconRes), contentDescription = title, modifier = Modifier.size(45.dp))
+            Spacer(modifier = Modifier.height(6.dp))
+            Text(text = title, fontSize = 12.sp, fontWeight = FontWeight.Bold, color = Color.Black)
         }
     }
 }

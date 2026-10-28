@@ -2,9 +2,11 @@ package com.example.myapplication.screen
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -19,7 +21,8 @@ import com.example.myapplication.R
 
 @Composable
 fun SolicitarLoteScreen(
-    onHomeClick: () -> Unit
+    onBackClick: () -> Unit,
+    onDetalleClick: () -> Unit
 ) {
     var busqueda by remember { mutableStateOf("") }
 
@@ -35,16 +38,27 @@ fun SolicitarLoteScreen(
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Text(
-                text = "Lotes Disponibles",
-                fontSize = 24.sp,
-                fontWeight = FontWeight.Bold,
-                color = Color.Black
-            )
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.clickable(onClick = onBackClick)
+            ) {
+                Icon(
+                    imageVector = Icons.Filled.ArrowBack,
+                    contentDescription = "Volver",
+                    tint = Color.Black
+                )
+                Spacer(modifier = Modifier.width(8.dp))
+                Text(
+                    text = "Lotes Disponibles",
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = Color.Black
+                )
+            }
             Image(
                 painter = painterResource(id = R.drawable.logo_alimentared),
                 contentDescription = "Logo",
-                modifier = Modifier.size(45.dp)
+                modifier = Modifier.size(40.dp)
             )
         }
 
@@ -72,35 +86,53 @@ fun SolicitarLoteScreen(
             verticalArrangement = Arrangement.spacedBy(12.dp),
             modifier = Modifier.weight(1f)
         ) {
-            LoteItemCard(categoria = "Frutas y verduras", estado = "Disponible", esDisponible = true)
-            LoteItemCard(categoria = "Lacteos", estado = "Disponible", esDisponible = true)
-            LoteItemCard(categoria = "Panadería", estado = "No disponible", esDisponible = false)
-            LoteItemCard(categoria = "Comida Preparada", estado = "Disponible", esDisponible = true)
-        }
-
-        Spacer(modifier = Modifier.height(16.dp))
-
-        Button(
-            onClick = onHomeClick,
-            shape = RoundedCornerShape(50.dp),
-            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFA5D6A7)),
-            modifier = Modifier
-                .width(160.dp)
-                .height(45.dp)
-        ) {
-            Text(text = "Solicitar", color = Color.Black, fontWeight = FontWeight.Bold)
+            LoteItemCard(
+                categoria = "Frutas y verduras",
+                estado = "Disponible",
+                esDisponible = true,
+                iconRes = R.drawable.frutas_verduras,
+                onClick = onDetalleClick
+            )
+            LoteItemCard(
+                categoria = "Lacteos",
+                estado = "Disponible",
+                esDisponible = true,
+                iconRes = R.drawable.lacteos,
+                onClick = onDetalleClick
+            )
+            LoteItemCard(
+                categoria = "Panadería",
+                estado = "No disponible",
+                esDisponible = false,
+                iconRes = R.drawable.panaderia,
+                onClick = {}
+            )
+            LoteItemCard(
+                categoria = "Comida Preparada",
+                estado = "Disponible",
+                esDisponible = true,
+                iconRes = R.drawable.comida_preparada,
+                onClick = onDetalleClick
+            )
         }
     }
 }
 
 @Composable
-fun LoteItemCard(categoria: String, estado: String, esDisponible: Boolean) {
+fun LoteItemCard(
+    categoria: String,
+    estado: String,
+    esDisponible: Boolean,
+    iconRes: Int,
+    onClick: () -> Unit
+) {
     Card(
         shape = RoundedCornerShape(24.dp),
         colors = CardDefaults.cardColors(containerColor = Color(0xFFA5D6A7)),
         modifier = Modifier
             .fillMaxWidth()
             .height(75.dp)
+            .clickable(enabled = esDisponible, onClick = onClick)
     ) {
         Row(
             modifier = Modifier
@@ -125,7 +157,7 @@ fun LoteItemCard(categoria: String, estado: String, esDisponible: Boolean) {
                 )
             }
             Image(
-                painter = painterResource(id = R.drawable.logo_alimentared),
+                painter = painterResource(id = iconRes),
                 contentDescription = null,
                 modifier = Modifier.size(40.dp)
             )

@@ -1,10 +1,12 @@
 package com.example.myapplication.screen
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -35,28 +37,26 @@ fun PerfilScreen(
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Text(
-                text = "Perfil",
-                fontSize = 24.sp,
-                fontWeight = FontWeight.Bold,
-                color = Color.Black
-            )
-
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                Button(
-                    onClick = onBackClick,
-                    shape = RoundedCornerShape(50.dp),
-                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFA5D6A7)),
-                    modifier = Modifier.height(35.dp)
-                ) {
-                    Text(text = "volver", color = Color.Black, fontSize = 12.sp)
-                }
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.clickable(onClick = onBackClick)
+            ) {
+                Icon(Icons.Filled.ArrowBack, contentDescription = "Volver", tint = Color.Black)
                 Spacer(modifier = Modifier.width(8.dp))
-                Image(
-                    painter = painterResource(id = R.drawable.logo_nombre),
-                    contentDescription = "Logo",
-                    modifier = Modifier.size(40.dp)
+                Text(
+                    text = "Perfil",
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = Color.Black
                 )
+            }
+            Button(
+                onClick = onBackClick,
+                shape = RoundedCornerShape(50.dp),
+                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFA5D6A7)),
+                modifier = Modifier.height(35.dp)
+            ) {
+                Text(text = "volver", color = Color.Black, fontSize = 12.sp)
             }
         }
 
