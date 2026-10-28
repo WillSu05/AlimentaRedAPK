@@ -100,7 +100,8 @@ fun RegisterScreen(
                     id = null,
                     nombre = nombre,
                     email = email,
-                    password = password
+                    password = password,
+                    rol = "DONANTE" // Campo obligatorio requerido por la entidad de Spring Boot
                 )
                 viewModel.registrarUsuario(nuevoUsuario) {
                     onRegisterSuccess(if (nombre.isNotBlank()) nombre else "Usuario")
