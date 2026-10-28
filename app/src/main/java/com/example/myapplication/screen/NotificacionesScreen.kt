@@ -13,10 +13,13 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.myapplication.Notificacion
 import com.example.myapplication.R
+
 
 @Composable
 fun NotificacionesScreen(
+    notificaciones: List<Notificacion>,
     onHomeClick: () -> Unit
 ) {
     Column(
@@ -26,7 +29,6 @@ fun NotificacionesScreen(
             .padding(20.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween,
@@ -50,28 +52,45 @@ fun NotificacionesScreen(
             Image(
                 painter = painterResource(id = R.drawable.logo_alimentared),
                 contentDescription = "Logo",
-                modifier = Modifier.size(45.dp)
+                modifier = Modifier.size(40.dp)
             )
         }
 
-        Spacer(modifier = Modifier.height(24.dp))
+        Spacer(modifier = Modifier.height(20.dp))
 
         Column(
             verticalArrangement = Arrangement.spacedBy(16.dp),
             modifier = Modifier.weight(1f)
         ) {
-            NotificacionCard(
-                title = "Usuario creado",
-                message = "La creación de tu usuario se realizó con éxito."
-            )
-            NotificacionCard(
-                title = "Tu solicitud ha sido aceptada",
-                message = "El lote de frutas y verduras ha sido aceptado por la organizacion."
-            )
-            NotificacionCard(
-                title = "Nuevo lote",
-                message = "Hay un nuevo lote disponible (caramelos y gaseosas) ¡ve y separa el tuyo!"
-            )
+            for (notif in notificaciones) {
+                Card(
+                    shape = RoundedCornerShape(24.dp),
+                    colors = CardDefaults.cardColors(containerColor = Color(0xFFA5D6A7)),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(90.dp)
+                ) {
+                    Column(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(16.dp),
+                        verticalArrangement = Arrangement.Center
+                    ) {
+                        Text(
+                            text = notif.titulo,
+                            fontSize = 14.sp,
+                            fontWeight = FontWeight.Bold,
+                            color = Color.Black
+                        )
+                        Spacer(modifier = Modifier.height(4.dp))
+                        Text(
+                            text = notif.mensaje,
+                            fontSize = 12.sp,
+                            color = Color.DarkGray
+                        )
+                    }
+                }
+            }
         }
 
         Spacer(modifier = Modifier.height(16.dp))
@@ -85,37 +104,6 @@ fun NotificacionesScreen(
                 .height(45.dp)
         ) {
             Text(text = "Inicio", color = Color.Black, fontWeight = FontWeight.Bold)
-        }
-    }
-}
-
-@Composable
-fun NotificacionCard(title: String, message: String) {
-    Card(
-        shape = RoundedCornerShape(24.dp),
-        colors = CardDefaults.cardColors(containerColor = Color(0xFFA5D6A7)),
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(95.dp)
-    ) {
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(16.dp),
-            verticalArrangement = Arrangement.Center
-        ) {
-            Text(
-                text = title,
-                fontSize = 14.sp,
-                fontWeight = FontWeight.Bold,
-                color = Color.Black
-            )
-            Spacer(modifier = Modifier.height(4.dp))
-            Text(
-                text = message,
-                fontSize = 12.sp,
-                color = Color.DarkGray
-            )
         }
     }
 }
