@@ -4,6 +4,13 @@ import android.util.Log
 
 class LoteRepository {
 
+    suspend fun obtenerCategorias(): List<CategoriaDto> {
+        return try {
+            RetrofitClient.apiService.listarCategorias()
+        } catch (e: Exception) {
+            emptyList()
+        }
+    }
 
     suspend fun obtenerLotes(): List<LoteAlimentoDto> {
         return try {
